@@ -1,8 +1,22 @@
 import flask
 from flask import request, jsonify
+import os
 
 app = flask.Flask(__name__)
-app.config["DEBUG"] = True
+
+# Load configuration from environment, with defaults
+app.config['DEBUG'] = True if os.getenv('DEBUG') == 'True' else False
+app.config['LISTEN_HOST'] = os.getenv('LISTEN_HOST', '0.0.0.0')
+app.config['LISTEN_PORT'] = int(os.getenv('LISTEN_PORT', '5000'))
+app.config['APP_URL'] = os.getenv('APP_URL', 'http://localhost:5000')  # must be https to avoid browser issues
+app.config['APP_CLIENT_ID'] = os.getenv('APP_CLIENT_ID')
+app.config['APP_CLIENT_SECRET'] = os.getenv('APP_CLIENT_SECRET')
+app.config['SESSION_SECRET'] = os.getenv('SESSION_SECRET', os.urandom(64))
+
+
+# Setup secure cookie secret
+app.secret_key = app.config['SESSION_SECRET']
+
 
 device = [
     {
@@ -24,12 +38,13 @@ device = [
 ]
 
 @app.route('/', methods=['GET'])
-def home():
-    return "This site is for demo purposes, API for Nyskopun 2020"
+def index():
+    return "<p>This site is for demo purposes, API for Nyskopun 2020</p><br><a href='/api/v1/resources/products/all'>api link</a>"
 
 
 @app.route('/api/v1/resources/products/all', methods=['GET'])
 def api_all():
     return jsonify(device)
 
-app.run()
+if __name__ == "__main__":
+    app.run(app.config['LISTEN_HOST'], app.config['LISTEN_PORT'])
