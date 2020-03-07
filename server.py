@@ -33,5 +33,3 @@ def api_all():
     return jsonify(device)
 
 app.run()
-
-https://github.com/gislig/NyskopunProject
