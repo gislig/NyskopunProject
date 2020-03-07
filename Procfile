@@ -1,2 +1,1 @@
-web:gunicorn app:server
-web:gunicorn run:app
+web:gunicorn app:app
