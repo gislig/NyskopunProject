@@ -25,7 +25,7 @@ device = [
 
 @app.route('/', methods=['GET'])
 def home():
-    return "This is it"
+    return "This site is for demo purposes, API for Nyskopun 2020"
 
 
 @app.route('/api/v1/resources/products/all', methods=['GET'])
