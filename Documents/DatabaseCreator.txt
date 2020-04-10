@@ -1,0 +1,25 @@
+create database projectx;
+create schema companyx;
+
+create table companyx.person_info
+(
+	id serial not null,
+	first_name varchar not null,
+	last_name varchar not null,
+	profile_picture bytea,
+	email varchar not null,
+	verified bool not null
+);
+
+comment on table companyx.person_info is 'Contains information about the user such as personal information. This does not contain login info';
+
+create unique index person_info_email_uindex
+	on companyx.person_info (email);
+
+create unique index person_info_id_uindex
+	on companyx.person_info (id);
+
+alter table companyx.person_info
+	add constraint person_info_pk
+		primary key (id);
+
