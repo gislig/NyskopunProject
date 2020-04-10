@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package person;
+
+message Person {
+    int32 id = 1;
+    string first_name = 2;
+    string last_name = 3;
+    bytes profile_picture = 4; 
+    string email = 5;
+    bool verified = 6;
+}
